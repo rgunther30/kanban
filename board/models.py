@@ -5,7 +5,7 @@ from django.utils import timezone
 class User(models.Model):
     userid = models.CharField(max_length=15)
     email = models.EmailField(max_length=30)
-    join_date = models.DateTimeField('date finished')
+    join_date = models.DateTimeField('date joined')
 
 class Todo(models.Model):
     todo_description = models.CharField(max_length=400)
@@ -15,7 +15,7 @@ class Todo(models.Model):
     def __unicode__(self):
         return self.todo_description
 
-    def recent_published(self):
+    def recently_published(self):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class InProgress(models.Model):

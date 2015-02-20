@@ -11,6 +11,9 @@ class UserAdmin(admin.ModelAdmin):
         ('Date Information', {'fields': ['email'], 'classes': ['collapse']}),
     ]
     inlines = [TodoInline]
+    list_display = ('userid', 'email', 'join_date')
+    list_filter = ['join_date']
+    search_fields = ['userid']
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Todo)
