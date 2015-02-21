@@ -1,0 +1,6 @@
+<h1>{{ inprog.description }}</h1>
+<ul>
+    {% for prog_task in inprog %}
+        <li>{{ prog_task.description }}</li>
+    {% endfor %}
+</ul>

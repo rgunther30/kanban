@@ -1,0 +1,9 @@
+{% if latest_todo_list %}
+    <ul>
+        {% for task in latest_todo_list %}
+            <li><a href="{% url 'todo' task.id %}">{{ task.todo_description }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No todo tasks here!</p>
+{% endif %}

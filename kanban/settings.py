@@ -23,8 +23,7 @@ SECRET_KEY = '0&vwr2+g-jpq0)thn!gric1@h3cgc^u1%6#(eyklqz^p4zfic5'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'board/templates')]
-print os.path.join(BASE_DIR, 'board/templates')
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 ALLOWED_HOSTS = []
 
 
