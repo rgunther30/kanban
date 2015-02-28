@@ -5,15 +5,22 @@ class TodoInline(admin.StackedInline):
     model = Todo
     extra = 3
 
+class InProgressAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('In Progress', {'fields': ['description', 'date_started', 'user']})
+    ]
+
 class UserAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['userid']}),
-        ('Date Information', {'fields': ['email'], 'classes': ['collapse']}),
+        ('Contact Information', {'fields': ['email', 'join_date']}),
     ]
     inlines = [TodoInline]
     list_display = ('userid', 'email', 'join_date')
     list_filter = ['join_date']
     search_fields = ['userid']
+
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Todo)

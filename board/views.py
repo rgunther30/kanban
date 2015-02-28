@@ -1,22 +1,32 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponseRedirect, Http404
+from django.core.urlresolvers import reverse
+from django.views import generic
 
-from board.models import Todo, InProgress
+from board.models import Todo, InProgress, Finished
 
-# Create your views here.
-def index(request):
-    latest_todo_list = Todo.objects.order_by('-pub_date')[:5]
-    context = { 'latest_todo_list': latest_todo_list}
-    return render(request, 'board/index.html', context)
+def IndexView():
+    template_name = 'board/index.html'
+    Todo.objects.order_by('-pub_date')[:5]
+    return render()
 
-def TodoView(request, Todo_id):
-    return HttpResponse(Todo.objects.get(id=Todo_id))
-
-def InProgressView(request, InProgress_id):
-    inprog = get_object_or_404(InProgress, pk=InProgress_id)
-    return render(request, 'board/InProgress.html',  {'inprog': inprog })
+class InProgressView(generic.DetailView):
+    model = InProgress
+    template_name = 'board/InProgress.html'
 
 def FinishedView(request, Finished_id):
-    response = ("You've finished the task: %s" % Finished_id)
+    p = get_object_or_404(InProgress, pk=Finished_id)
+    try:
+         selected = p.get(pk=request.POST['In Progress'])
+    except (KeyError, p.DoesNotExist):
+        return render(request, 'board/finished.html', {
+            'InProgress': p,
+            'error_message': "This isn't a valid choice",
+        })
+    else:
+        print selected
+
     return HttpResponse(response % Finished_id)
+
+
 

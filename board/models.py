@@ -7,6 +7,9 @@ class User(models.Model):
     email = models.EmailField(max_length=30)
     join_date = models.DateTimeField('date joined')
 
+    def __unicode__(self):
+        return self.userid
+
 class Todo(models.Model):
     todo_description = models.CharField(max_length=400)
     pub_date = models.DateTimeField('date published')
