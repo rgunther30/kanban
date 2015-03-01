@@ -1,0 +1,9 @@
+{% block title %}{{ task.name }}{% endblock %}
+	
+{% if task %}
+    <ul>
+    <li>{{ task.description }}</li>
+    </ul>
+{% else %}
+    <p>No task here!</p>
+{% endif %}

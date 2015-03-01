@@ -1,12 +1,50 @@
-{% extends "base.html" %}
-{% block title %}{{ }}{% endblock %}
+{% extends 'board/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
 	
-{% if tasks %}
-    <ul>
-        {% for task in tasks %}
-            <li><a href="{% url 'board:task' task.id %}">{{ task.description }}</a></li>
-        {% endfor %}
-    </ul>
+{% block content %}	
+{% if todo %}
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">To do</h3>
+  </div>
+  <div class="panel-body">
+    <ul class='list-group'>
+		{% for task in todo %}
+			<li class='list-group'>{{ task.description }}</li>
+		{% endfor %}
+	</ul>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">In Progress</h3>
+  </div>
+  <div class="panel-body">
+    <ul class='list-group'>
+		{% for task in inprogress %}
+			<li class='list-group'>{{ task.description }}</li>
+		{% endfor %}
+	</ul>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Finished</h3>
+  </div>
+  <div class="panel-body">
+    <ul class='list-group'>
+		{% for task in finished %}
+			<li class='list-group'>{{ task.description }}</li>
+		{% endfor %} 
+	</ul>
+  </div>
+</div>
+
 {% else %}
-    <p>No tasks here!</p>
+    <p>No tasks here yet!</p>
 {% endif %}
+{% endblock %}

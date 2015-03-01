@@ -5,6 +5,6 @@ from board import views
 
 urlpatterns = patterns('',
     url(r'^$', views.IndexView, name='index'),
-    url(r'^task/(?P<pk>\d+)/$', views.Task, name ='task')
+    url(r'^task/(?P<key>\d+)/$', views.TaskView, name ='task')
 )
 
