@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 {% block title %}{{ }}{% endblock %}
-
-
-{% if latest_todo_list %}
+	
+{% if tasks %}
     <ul>
-        {% for task in latest_todo_list %}
-            <li><a href="{% url 'board:finished' task.id %}">{{ task.todo_description }}</a></li>
+        {% for task in tasks %}
+            <li><a href="{% url 'board:task' task.id %}">{{ task.description }}</a></li>
         {% endfor %}
     </ul>
 {% else %}
-    <p>No todo tasks here!</p>
+    <p>No tasks here!</p>
 {% endif %}

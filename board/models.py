@@ -10,31 +10,16 @@ class User(models.Model):
     def __unicode__(self):
         return self.userid
 
-class Todo(models.Model):
-    todo_description = models.CharField(max_length=400)
-    pub_date = models.DateTimeField('date published')
-    user = models.ForeignKey(User, related_name='todo_user', null=True, blank=True)
-
-    def __unicode__(self):
-        return self.todo_description
-
-    def recently_published(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
-
-class InProgress(models.Model):
-    description = models.CharField(max_length=400)
-    date_started = models.DateTimeField('date started')
-    user = models.ForeignKey('User', related_name='inprogress_user', null=True, blank=True)
+class Task(models.Model):
+    creator = models.ForeignKey('User', related_name='Creator')
+    owner = models.ForeignKey('User', related_name='Owner')
+    creation_date = models.DateTimeField('Date created', auto_now=True)
+    work_date = models.DateTimeField('Initated date', blank=True, null=True)
+    finished_date = models.DateTimeField('Date finished', blank=True, null=True)
+    description = models.TextField(max_length=500)
+    name = models.CharField(max_length=40)
+    state = models.CharField(max_length=12)
 
     def __unicode__(self):
         return self.description
-
-class Finished(models.Model):
-    finished_description = models.CharField(max_length=400)
-    date_started = models.DateTimeField('date finished')
-    user = models.ForeignKey('User', related_name='finished_user', null=True, blank=True)
-
-    def __unicode__(self):
-        return self.finished_description
-
 
