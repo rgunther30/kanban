@@ -2,7 +2,12 @@
 	
 {% if task %}
     <ul>
-    <li>{{ task.description }}</li>
+    <li>Creator: {{ task.creator }}</li>
+    <li>Owner: {{ task.owner }}</li>
+    <li>Creation Date: {{ task.creation_date }}</li>
+    <li>Name: {{ task.name }}</li>
+    <li>Description: {{ task.description }}</li>
+    <li>State: {{ task.state }}</li>
     </ul>
 {% else %}
     <p>No task here!</p>

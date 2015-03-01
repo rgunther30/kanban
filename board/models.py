@@ -18,13 +18,13 @@ class Task(models.Model):
     finished_date = models.DateTimeField('Date finished', blank=True, null=True)
     description = models.TextField(max_length=500)
     name = models.CharField(max_length=40)
-    todo = 'todo'
-    inprogress = 'inprogress'
-    finished = 'finished'
+    todo = 'To do'
+    inprogress = 'In Progress'
+    finished = 'Finished'
     state_choices = (
-        (todo, 'todo'),
-        (inprogress, 'inprogress'),
-        (finished, 'finished'),
+        (todo, 'To do'),
+        (inprogress, 'In progress'),
+        (finished, 'Finished'),
         )
     state = models.CharField(max_length=12, choices=state_choices, default=todo)
 
