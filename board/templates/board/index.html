@@ -4,40 +4,46 @@
 	
 {% block content %}	
 {% if todo %}
-
-<div class="panel panel-default">
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+</script>
+<div class="panel panel-success col-md-4">
   <div class="panel-heading">
     <h3 class="panel-title">To do</h3>
   </div>
   <div class="panel-body">
     <ul class='list-group'>
 		{% for task in todo %}
-			<li class='list-group'>{{ task.description }}</li>
+			<a data-toggle="popover" data-container="body" title="Creator: {{ task.creator }}" data-content="Created on: {{ task.creation_date }}">{{ task.name }}</a><li>{{ task.description }}</li>
 		{% endfor %}
 	</ul>
   </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-success col-md-4">
   <div class="panel-heading">
     <h3 class="panel-title">In Progress</h3>
   </div>
   <div class="panel-body">
     <ul class='list-group'>
 		{% for task in inprogress %}
+			<a data-toggle="popover" data-container="body" title="Creator: {{ task.creator }}" data-content="Created on: {{ task.creation_date }}">{{ task.name }}</a>
 			<li class='list-group'>{{ task.description }}</li>
 		{% endfor %}
 	</ul>
   </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-success col-md-4">
   <div class="panel-heading">
     <h3 class="panel-title">Finished</h3>
   </div>
   <div class="panel-body">
     <ul class='list-group'>
 		{% for task in finished %}
+			<a data-toggle="popover" data-container="body" title="Creator: {{ task.creator }}" data-content="Created on: {{ task.creation_date }}">{{ task.name }}</a>
 			<li class='list-group'>{{ task.description }}</li>
 		{% endfor %} 
 	</ul>
