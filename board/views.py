@@ -40,6 +40,12 @@ def AddTaskView(request):
     return render(request, 'board/addtask.html', {'form': form})
 
 @login_required
+def DeleteTaskView(request):
+    if request.method == 'POST':
+        print "Posted form."
+    return render(request, 'board/index.html')
+
+@login_required
 def TaskView(request, key):
     task = Task.objects.get(pk=key)
     return render(request, 'board/taskview.html', { 'task': task })
