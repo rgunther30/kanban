@@ -19,7 +19,7 @@
 </table>
 
 <input type="submit" value="login" />
-<input type="hidden" value="{% url 'board:index' %}" />
+<input type="hidden" name="next" value="{{ next }}" />
 </form>
 
 {% endblock %}
