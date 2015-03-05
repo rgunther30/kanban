@@ -16,8 +16,13 @@ $(function () {
   <div class="panel-body">
     <ul class='list-group'>
 		{% for task in todo %}
-			<a data-toggle="popover" data-html="true" data-container="body" title="Creator: {{ task.creator }} Created on: {{ task.creation_date }}" data-content="<form><button class='btn btn-default' value='{{ task.id }}'>Delete</button></form>">{{ task.name }}</a><li>{{ task.description}}</li>
-
+			<a data-toggle="popover" data-html="true" data-container="body"
+               title="Creator: {{ task.creator }} Created on: {{ task.creation_date }}"
+               data-content="<form method='POST' action='{% url 'board:delete' %}'>
+                           {% csrf_token %}
+                           <input type='hidden' name='task_id' value='{{task.id}}'>
+                           <input type='submit' class='btn btn-sm btn-default'value='Delete'/></form>">
+                {{ task.name }}</a><li>{{ task.description }}</li>
 		{% endfor %}
 	</ul>
   </div>
@@ -55,6 +60,11 @@ $(function () {
     <p>No tasks here yet!</p>
 {% endif %}
 <script>
-    //Add Javascript here to detect when each button has been hit, then submit value (task.id) via ajax to process removal, state change or edited values.
+$( document ).ready(function() {
+    $("input[type='button']").click(function(){
+        console.log($(this).attr('value'));
+    });
+    console.log( "button doesn't wanna work!" );
+});
 </script>
 {% endblock %}

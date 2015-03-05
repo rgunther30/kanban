@@ -42,8 +42,13 @@ def AddTaskView(request):
 @login_required
 def DeleteTaskView(request):
     if request.method == 'POST':
-        print "Posted form."
-    return render(request, 'board/index.html')
+        try:
+            task_id = request.POST.get('task_id')
+            task = Task.objects.get(id=task_id)
+            task.delete()
+        except:
+            print "Error!"
+    return redirect('board:index')
 
 @login_required
 def TaskView(request, key):
