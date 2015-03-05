@@ -20,7 +20,11 @@ def IndexView(request):
     todo = Task.objects.filter(creator=current_user, state='To do')
     inprogress = Task.objects.filter(creator=current_user, state='In Progress')
     finished = Task.objects.filter(creator=current_user, state='finished')
-    return render(request, 'board/index.html', { 'todo': todo, 'inprogress': inprogress, 'finished': finished })
+    tasks = [todo, inprogress, finished]
+    titles = ["To do", "In Progress", "Finished"]
+    titles_and_tasks = zip(titles, tasks)
+    print titles_and_tasks
+    return render(request, 'board/index.html', { 'titles_and_tasks': titles_and_tasks })
 
 @login_required
 def ProfileView(request):

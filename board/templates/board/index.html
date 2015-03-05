@@ -3,68 +3,34 @@
 {% block title %}Dashboard{% endblock %}
 	
 {% block content %}	
-{% if todo %}
+{% if titles_and_tasks %}
 <script>
 $(function () {
   $('[data-toggle="popover"]').popover()
 })
 </script>
-<div class="panel panel-success col-md-4">
-  <div class="panel-heading">
-    <h3 class="panel-title">To do</h3>
-  </div>
-  <div class="panel-body">
-    <ul class='list-group'>
-		{% for task in todo %}
-			<a data-toggle="popover" data-html="true" data-container="body"
-               title="Creator: {{ task.creator }} Created on: {{ task.creation_date }}"
-               data-content="<form method='POST' action='{% url 'board:delete' %}'>
-                           {% csrf_token %}
-                           <input type='hidden' name='task_id' value='{{task.id}}'>
-                           <input type='submit' class='btn btn-sm btn-default'value='Delete'/></form>">
-                {{ task.name }}</a><li>{{ task.description }}</li>
-		{% endfor %}
-	</ul>
-  </div>
-</div>
-
-<div class="panel panel-success col-md-4">
-  <div class="panel-heading">
-    <h3 class="panel-title">In Progress</h3>
-  </div>
-  <div class="panel-body">
-    <ul class='list-group'>
-		{% for task in inprogress %}
-			<a data-toggle="popover" data-container="body" title="Creator: {{ task.creator }}" data-content="Created on: {{ task.creation_date }}">{{ task.name }}</a>
-			<li class='list-group'>{{ task.description }}</li>
-		{% endfor %}
-	</ul>
-  </div>
-</div>
-
-<div class="panel panel-success col-md-4">
-  <div class="panel-heading">
-    <h3 class="panel-title">Finished</h3>
-  </div>
-  <div class="panel-body">
-    <ul class='list-group'>
-		{% for task in finished %}
-			<a data-toggle="popover" data-container="body" title="Creator: {{ task.creator }}" data-content="Created on: {{ task.creation_date }}">{{ task.name }}</a>
-			<li class='list-group'>{{ task.description }}</li>
-		{% endfor %} 
-	</ul>
-  </div>
-</div>
-
+    {% for title, group in titles_and_tasks %}
+    <div class="panel panel-success col-md-4">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ title }}</h3>
+      </div>
+      <div class="panel-body">
+        <ul class='list-group'>
+            {% for task in group %}
+                <a data-toggle="popover" data-html="true" data-container="body"
+                   data-trigger="focus" tabindex="0"
+                   title="Creator: {{ task.creator }} Created on: {{ task.creation_date }}"
+                   data-content="<form method='POST' action='{% url 'board:delete' %}'>
+                               {% csrf_token %}
+                               <input type='hidden' name='task_id' value='{{task.id}}'>
+                               <input type='submit' class='btn btn-sm btn-default'value='Delete'/></form>">
+                    {{ task.name }}</a><li>{{ task.description }}</li>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endfor %}
 {% else %}
     <p>No tasks here yet!</p>
 {% endif %}
-<script>
-$( document ).ready(function() {
-    $("input[type='button']").click(function(){
-        console.log($(this).attr('value'));
-    });
-    console.log( "button doesn't wanna work!" );
-});
-</script>
 {% endblock %}
