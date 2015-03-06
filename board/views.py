@@ -17,13 +17,9 @@ def LogoutView(request):
 @login_required
 def IndexView(request):
     current_user = request.user
-    todo = Task.objects.filter(creator=current_user, state='To do')
-    inprogress = Task.objects.filter(creator=current_user, state='In Progress')
-    finished = Task.objects.filter(creator=current_user, state='finished')
-    tasks = [todo, inprogress, finished]
     titles = ["To do", "In Progress", "Finished"]
+    tasks = [Task.objects.filter(creator=current_user, state=search_state) for search_state in titles]
     titles_and_tasks = zip(titles, tasks)
-    print titles_and_tasks
     return render(request, 'board/index.html', { 'titles_and_tasks': titles_and_tasks })
 
 @login_required
@@ -44,12 +40,13 @@ def AddTaskView(request):
     return render(request, 'board/addtask.html', {'form': form})
 
 @login_required
-def DeleteTaskView(request):
+def EditTaskView(request):
     if request.method == 'POST':
         try:
             task_id = request.POST.get('task_id')
             task = Task.objects.get(id=task_id)
-            task.delete()
+            print request.POST.get('In Progress')
+            print request.POST.get('Delete')
         except:
             print "Error!"
     return redirect('board:index')

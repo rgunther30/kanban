@@ -20,9 +20,10 @@ $(function () {
                 <a data-toggle="popover" data-html="true" data-container="body"
                    data-trigger="focus" tabindex="0"
                    title="Creator: {{ task.creator }} Created on: {{ task.creation_date }}"
-                   data-content="<form method='POST' action='{% url 'board:delete' %}'>
+                   data-content="<form method='POST' action='{% url 'board:edit' %}'>
                                {% csrf_token %}
                                <input type='hidden' name='task_id' value='{{task.id}}'>
+                               <input type='submit' class='btn btn-sm btn-default' value='In Progress'/>
                                <input type='submit' class='btn btn-sm btn-default'value='Delete'/></form>">
                     {{ task.name }}</a><li>{{ task.description }}</li>
             {% endfor %}
