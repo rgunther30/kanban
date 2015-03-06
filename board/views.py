@@ -45,8 +45,15 @@ def EditTaskView(request):
         try:
             task_id = request.POST.get('task_id')
             task = Task.objects.get(id=task_id)
-            print request.POST.get('In Progress')
-            print request.POST.get('Delete')
+            if 'progress' in request.POST:
+                if task.state == 'To do':
+                    task.state = 'In Progress'
+                elif task.state == 'In Progress':
+                    task.state = 'Finished'
+                print task.state
+                task.save()
+            elif 'delete' in request.POST:
+                task.delete()
         except:
             print "Error!"
     return redirect('board:index')

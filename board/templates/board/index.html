@@ -11,8 +11,8 @@ $(function () {
 </script>
     {% for title, group in titles_and_tasks %}
     <div class="panel panel-success col-md-4">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{ title }}</h3>
+      <div class="panel-heading clearfix">
+        <h3 class="panel-title">{{ title }}<a href="{% url 'board:add' %}" class="btn btn-default btn-sm pull-right">Add {{title}}</a></h3>
       </div>
       <div class="panel-body">
         <ul class='list-group'>
@@ -23,8 +23,11 @@ $(function () {
                    data-content="<form method='POST' action='{% url 'board:edit' %}'>
                                {% csrf_token %}
                                <input type='hidden' name='task_id' value='{{task.id}}'>
-                               <input type='submit' class='btn btn-sm btn-default' value='In Progress'/>
-                               <input type='submit' class='btn btn-sm btn-default'value='Delete'/></form>">
+                               <button type='submit' class='btn btn-sm btn-default' name='progress'>Next
+                               </button>
+                               <button type='submit' class='btn btn-sm btn-default' name='delete'>Delete
+                               </button>
+                               </form>">
                     {{ task.name }}</a><li>{{ task.description }}</li>
             {% endfor %}
         </ul>
