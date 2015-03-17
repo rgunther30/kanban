@@ -1,14 +1,24 @@
-{% block title %}{{ task.name }}{% endblock %}
-	
+{% extends 'board/base.html' %}
+
+
+{% block content %}	
+{% block title %}Task Details{% endblock %}
 {% if task %}
-    <ul>
-    <li>Creator: {{ task.creator }}</li>
-    <li>Owner: {{ task.owner }}</li>
-    <li>Creation Date: {{ task.creation_date }}</li>
-    <li>Name: {{ task.name }}</li>
-    <li>Description: {{ task.description }}</li>
-    <li>State: {{ task.state }}</li>
-    </ul>
+    <div class = "panel panel-success">
+        <div class = "panel-heading">
+            <h4>{{task.name}}</h4>
+        </div>
+        <div class = "panel-body">
+            <ul>
+            <li>Creator: {{ task.creator }}</li>
+            <li>Owner: {{ task.owner }}</li>
+            <li>Creation Date: {{ task.creation_date }}</li>
+            <li>Description: {{ task.description }}</li>
+            <li>State: {{ task.state }}</li>
+            </ul>
+        </div>
+    </div>
 {% else %}
     <p>No task here!</p>
 {% endif %}
+{% endblock %}

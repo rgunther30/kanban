@@ -17,20 +17,33 @@ $(function () {
       <div class="panel-body">
         <ul class='list-group'>
             {% for task in group %}
-                <a data-toggle="popover" data-html="true" data-container="body"
-                   data-trigger="focus" tabindex="0"
-                   title="Creator: {{ task.creator }} Created on: {{ task.creation_date }}"
-                   data-content="<form method='POST' action='{% url 'board:edit' %}'>
+                <form method='POST' action='{% url 'board:edit' %}'>
+                     {% csrf_token %}
+                     <a data-toggle="popover" data-html="true" data-container="body"
+                     data-trigger="focus" tabindex="0"
+                     title="Creator: {{ task.creator }} Created on: {{ task.creation_date }}"
+                     data-content="<form method='POST' action='{% url 'board:edit' %}'>
                                {% csrf_token %}
                                <input type='hidden' name='task_id' value='{{task.id}}'>
-                               <button type='submit' class='btn btn-sm btn-default' name='progress'>Next
+                               <button type='submit' class='btn btn-sm btn-default' name='view_task'>Task Details
                                </button>
-                               <button type='submit' class='btn btn-sm btn-default' name='regress'>Revert
-                               </button>
-                               <button type='submit' class='btn btn-sm btn-default' name='delete'>Delete
+                               <button type='submit' class='btn btn-sm btn-default' name='add_comment'>Add Comment
                                </button>
                                </form>">
-                    {{ task.name }}</a><li>{{ task.description }}</li>
+                      {{ task.name }}
+                      </a>
+                     <input type='hidden' name='task_id' value='{{task.id}}'>
+                     <button type='submit' class='btn btn-sm btn-default pull-right' name='progress'>
+                        <span class="glyphicon glyphicon-arrow-right"></span>
+                     </button>
+                     <button type='submit' class='btn btn-sm btn-default pull-right' name='regress'>
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                     </button>
+                     <button type='submit' class='btn btn-sm btn-default pull-right' name='delete'>
+                        <span class="glyphicon glyphicon-remove"></span>
+                     </button>
+                </form>
+                <li>{{ task.description }}</li>
             {% endfor %}
         </ul>
       </div>

@@ -25,7 +25,18 @@ class Task(models.Model):
     def __unicode__(self):
         return self.description
 
+class Comment(models.Model):
+    writer = models.ForeignKey(User, related_name='Writer')
+    body = models.TextField(max_length = 500)
+    creation_date = models.DateTimeField('Date Created', auto_now=True)
+    task_id = models.IntegerField()
+
 class AddTaskForm(ModelForm):
     class Meta:
         model = Task
         fields = ('name', 'description', 'state', 'creator', 'owner', 'work_date', 'finished_date')
+
+class AddCommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('body',)
