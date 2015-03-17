@@ -52,6 +52,12 @@ def EditTaskView(request):
                     task.state = 'Finished'
                 print task.state
                 task.save()
+            elif 'regress' in request.POST:
+                if task.state == 'In Progress':
+                    task.state = 'To do'
+                elif task.state == 'Finished':
+                    task.state = 'In Progress'
+                task.save()
             elif 'delete' in request.POST:
                 task.delete()
         except:
