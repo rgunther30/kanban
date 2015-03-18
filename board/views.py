@@ -1,8 +1,8 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.http import Http404
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 from board.models import Task, AddTaskForm, AddCommentForm
 
@@ -53,9 +53,7 @@ def EditTaskView(request):
             elif 'delete' in request.POST:
                 task.delete()
             elif 'view_task' in request.POST:
-                task_page = "board:task/" 
-                print task_page
-                return redirect(task_page, task_id)
+                return redirect("board:task", task_id)
             elif 'add_comment' in request.POST:
                 return redirect("board:addcomment")
         except Exception, e:
@@ -76,8 +74,10 @@ def AddCommentView(request):
 
 @login_required
 def TaskView(request, key):
-    task = Task.objects.get(pk=key)
+    task = get_object_or_404(Task, pk=key)
     return render(request, 'board/taskview.html', { 'task': task })
+
+
 
 def advance_progress(task):
     if task.state == 'To do':
