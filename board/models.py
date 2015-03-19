@@ -26,10 +26,10 @@ class Task(models.Model):
         return self.description
 
 class Comment(models.Model):
-    writer = models.ForeignKey(User, related_name='Writer')
+    author = models.ForeignKey(User, related_name='Author')
     body = models.TextField(max_length = 500)
     creation_date = models.DateTimeField('Date Created', auto_now=True)
-    task_id = models.IntegerField()
+    task_id = models.IntegerField(null = True, blank = True)
 
 class AddTaskForm(ModelForm):
     class Meta:
@@ -39,4 +39,4 @@ class AddTaskForm(ModelForm):
 class AddCommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ('body',)
+        fields = ('author', 'body', 'task_id')

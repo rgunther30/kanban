@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from board.models import Task, AddTaskForm
+from board.models import Task, Comment, AddTaskForm, AddCommentForm
 from django.contrib.auth.models import User
 from django.utils import timezone
 
@@ -23,6 +23,13 @@ class TaskInitTestCase(TestCase):
 		    description = "Test Object.",
 		    name = "Test Name",
 		    state = "To do"
+			)
+
+		Comment.objects.create(
+			author = user,
+			body = 'Test body',
+			task_id = 1,
+			creation_date = self.time
 			)
 
 	def test_task_exists(self):
@@ -85,6 +92,21 @@ class TaskInitTestCase(TestCase):
 		self.assertTrue(test_task.state, "In Progress")
 		test_task.state = "Finished"
 		self.assertTrue(test_task.state, "Finished")		
+
+	def test_adding_comment(self):
+		c = Client(HTTP_USER_AGENT="Mozilla/5.0")
+		comment_form = AddCommentForm(
+			{'author': '1',
+			'body': 'Test123',
+			'task_id': '1'})
+		self.assertTrue(comment_form.is_valid())
+
+		saved_form = comment_form.save()
+		test_comment = Comment.objects.get(body = 'Test body')
+		self.assertTrue(test_comment.author, 'TestUser')
+		self.assertTrue(test_comment.body, 'Test body')
+		self.assertTrue(test_comment.task_id, 1)
+		
 
 if '__main__' == __name__:
 	unittest.main()

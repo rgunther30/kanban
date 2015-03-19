@@ -2,3 +2,4 @@ db.sqlite*
 board/migrations/
 *.pyc
 migrations*
+.idea*

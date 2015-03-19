@@ -55,13 +55,13 @@ def EditTaskView(request):
             elif 'view_task' in request.POST:
                 return redirect("board:task", task_id)
             elif 'add_comment' in request.POST:
-                return redirect("board:addcomment")
+                return redirect("board:addcomment", task_id)
         except Exception, e:
             print "Error! " + str(e)
     return redirect('board:index')
 
 @login_required
-def AddCommentView(request):
+def AddCommentView(request, task_id):
     if request.method == 'POST':
         comment_form = AddCommentForm(request.POST)
         if comment_form.is_valid():
